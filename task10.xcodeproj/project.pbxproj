@@ -11,6 +11,10 @@
 		E7CC890A26D659760005532E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7CC890926D659760005532E /* Assets.xcassets */; };
 		E7CC890D26D659760005532E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7CC890B26D659760005532E /* LaunchScreen.storyboard */; };
 		E7CC891526D663D40005532E /* NewGameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7CC891426D663D40005532E /* NewGameVC.swift */; };
+		E7CC891C26D68B900005532E /* ext+UIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7CC891B26D68B900005532E /* ext+UIButton.swift */; };
+		E7CC891F26D68F3C0005532E /* Nunito-ExtraBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E7CC891E26D68F3C0005532E /* Nunito-ExtraBold.ttf */; };
+		E7CC892226D6E1630005532E /* TableNameCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7CC892126D6E1630005532E /* TableNameCell.swift */; };
+		E7CC892C26D701510005532E /* Nunito-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E7CC892B26D701510005532E /* Nunito-SemiBold.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +24,10 @@
 		E7CC890C26D659760005532E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E7CC890E26D659760005532E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E7CC891426D663D40005532E /* NewGameVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewGameVC.swift; sourceTree = "<group>"; };
+		E7CC891B26D68B900005532E /* ext+UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ext+UIButton.swift"; sourceTree = "<group>"; };
+		E7CC891E26D68F3C0005532E /* Nunito-ExtraBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-ExtraBold.ttf"; sourceTree = "<group>"; };
+		E7CC892126D6E1630005532E /* TableNameCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableNameCell.swift; sourceTree = "<group>"; };
+		E7CC892B26D701510005532E /* Nunito-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Nunito-SemiBold.ttf"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,13 +60,41 @@
 		E7CC88FF26D659750005532E /* task10 */ = {
 			isa = PBXGroup;
 			children = (
+				E7CC892026D6D76C0005532E /* NewGameVC */,
+				E7CC891D26D68F1F0005532E /* fonts */,
+				E7CC891626D68A3E0005532E /* style */,
 				E7CC890026D659750005532E /* AppDelegate.swift */,
-				E7CC891426D663D40005532E /* NewGameVC.swift */,
 				E7CC890926D659760005532E /* Assets.xcassets */,
 				E7CC890B26D659760005532E /* LaunchScreen.storyboard */,
 				E7CC890E26D659760005532E /* Info.plist */,
 			);
 			path = task10;
+			sourceTree = "<group>";
+		};
+		E7CC891626D68A3E0005532E /* style */ = {
+			isa = PBXGroup;
+			children = (
+				E7CC891B26D68B900005532E /* ext+UIButton.swift */,
+			);
+			path = style;
+			sourceTree = "<group>";
+		};
+		E7CC891D26D68F1F0005532E /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				E7CC892B26D701510005532E /* Nunito-SemiBold.ttf */,
+				E7CC891E26D68F3C0005532E /* Nunito-ExtraBold.ttf */,
+			);
+			path = fonts;
+			sourceTree = "<group>";
+		};
+		E7CC892026D6D76C0005532E /* NewGameVC */ = {
+			isa = PBXGroup;
+			children = (
+				E7CC891426D663D40005532E /* NewGameVC.swift */,
+				E7CC892126D6E1630005532E /* TableNameCell.swift */,
+			);
+			path = NewGameVC;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -118,6 +154,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E7CC892C26D701510005532E /* Nunito-SemiBold.ttf in Resources */,
+				E7CC891F26D68F3C0005532E /* Nunito-ExtraBold.ttf in Resources */,
 				E7CC890D26D659760005532E /* LaunchScreen.storyboard in Resources */,
 				E7CC890A26D659760005532E /* Assets.xcassets in Resources */,
 			);
@@ -130,8 +168,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E7CC891C26D68B900005532E /* ext+UIButton.swift in Sources */,
 				E7CC890126D659750005532E /* AppDelegate.swift in Sources */,
 				E7CC891526D663D40005532E /* NewGameVC.swift in Sources */,
+				E7CC892226D6E1630005532E /* TableNameCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
