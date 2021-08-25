@@ -8,22 +8,18 @@
 
 /* Begin PBXBuildFile section */
 		E7CC890126D659750005532E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7CC890026D659750005532E /* AppDelegate.swift */; };
-		E7CC890326D659750005532E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7CC890226D659750005532E /* SceneDelegate.swift */; };
-		E7CC890526D659750005532E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7CC890426D659750005532E /* ViewController.swift */; };
-		E7CC890826D659750005532E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7CC890626D659750005532E /* Main.storyboard */; };
 		E7CC890A26D659760005532E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E7CC890926D659760005532E /* Assets.xcassets */; };
 		E7CC890D26D659760005532E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E7CC890B26D659760005532E /* LaunchScreen.storyboard */; };
+		E7CC891526D663D40005532E /* NewGameVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7CC891426D663D40005532E /* NewGameVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		E7CC88FD26D659750005532E /* task10.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = task10.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E7CC890026D659750005532E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		E7CC890226D659750005532E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		E7CC890426D659750005532E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		E7CC890726D659750005532E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		E7CC890926D659760005532E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E7CC890C26D659760005532E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E7CC890E26D659760005532E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E7CC891426D663D40005532E /* NewGameVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewGameVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,9 +53,7 @@
 			isa = PBXGroup;
 			children = (
 				E7CC890026D659750005532E /* AppDelegate.swift */,
-				E7CC890226D659750005532E /* SceneDelegate.swift */,
-				E7CC890426D659750005532E /* ViewController.swift */,
-				E7CC890626D659750005532E /* Main.storyboard */,
+				E7CC891426D663D40005532E /* NewGameVC.swift */,
 				E7CC890926D659760005532E /* Assets.xcassets */,
 				E7CC890B26D659760005532E /* LaunchScreen.storyboard */,
 				E7CC890E26D659760005532E /* Info.plist */,
@@ -126,7 +120,6 @@
 			files = (
 				E7CC890D26D659760005532E /* LaunchScreen.storyboard in Resources */,
 				E7CC890A26D659760005532E /* Assets.xcassets in Resources */,
-				E7CC890826D659750005532E /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -137,23 +130,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E7CC890526D659750005532E /* ViewController.swift in Sources */,
 				E7CC890126D659750005532E /* AppDelegate.swift in Sources */,
-				E7CC890326D659750005532E /* SceneDelegate.swift in Sources */,
+				E7CC891526D663D40005532E /* NewGameVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		E7CC890626D659750005532E /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				E7CC890726D659750005532E /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		E7CC890B26D659760005532E /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -216,7 +200,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -271,7 +255,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
