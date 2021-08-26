@@ -25,7 +25,7 @@ extension UIButton {
     func addConstraintsToButton(_ margins : inout UIView, _ ratio: CGRect) {
         self.translatesAutoresizingMaskIntoConstraints = false
         self.topAnchor.constraint(equalTo: margins.topAnchor , constant: ratio.origin.y).isActive = true
-        self.leftAnchor.constraint(equalTo: margins.leftAnchor , constant: ratio.origin.x).isActive = true
+        self.leadingAnchor.constraint(equalTo: margins.leadingAnchor , constant: ratio.origin.x).isActive = true
         self.heightAnchor.constraint(equalToConstant: ratio.height).isActive = true
         self.widthAnchor.constraint(equalToConstant: ratio.width).isActive = true
     }
@@ -48,9 +48,9 @@ extension UILabel {
     
     func addConstraintsToNameLabel(_ margins : inout UIView, _ ratio: CGRect) {
         self.translatesAutoresizingMaskIntoConstraints = false
-        self.topAnchor.constraint(equalTo: margins.topAnchor, constant: ratio.origin.y).isActive = true
-        self.leftAnchor.constraint(equalTo: margins.leftAnchor, constant: ratio.origin.x).isActive = true
-        self.widthAnchor.constraint(equalToConstant: ratio.width).isActive = true
+        self.bottomAnchor.constraint(equalTo: margins.topAnchor, constant: -ratio.origin.y).isActive = true
+        self.leadingAnchor.constraint(equalTo: margins.leadingAnchor).isActive = true
+        self.widthAnchor.constraint(equalTo: margins.widthAnchor).isActive = true
         self.heightAnchor.constraint(equalToConstant: ratio.height).isActive = true
     }
 }
