@@ -7,10 +7,11 @@
 
 import UIKit
 
-class NewGameVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class NewGameVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
 
     var cancel = UIButton("Cancel")
     var name = UILabel("Game Counter")
+    var scroll = UIScrollView(frame: UIScreen.main.bounds)
     var tableName = UITableView(frame: UIScreen.main.bounds, style: .grouped)
     let multiplier = UIScreen.main.bounds.width / 375
     var ratio: CGRect {
@@ -36,6 +37,7 @@ class NewGameVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.layer.backgroundColor = UIColor(red: 0.136, green: 0.136, blue: 0.138, alpha: 1).cgColor
+        addScrollWithConstraints()
         addTableWithConstraints()
         addTitleName()
         if !UIApplication.isFirstLaunch() {
@@ -49,9 +51,18 @@ class NewGameVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     }
     
     func addTitleName() {
-        view.addSubview(name)
+        scroll.addSubview(name)
         var tmpView = tableName as UIView
         name.addConstraintsToNameLabel(&tmpView, ratioName)
+    }
+    
+    func addScrollWithConstraints() {
+        view.addSubview(scroll)
+        scroll.translatesAutoresizingMaskIntoConstraints = false
+        scroll.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        scroll.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        scroll.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        scroll.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
     }
     
     func addTableWithConstraints() {
@@ -60,19 +71,18 @@ class NewGameVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         tableName.delegate = self
         tableName.backgroundColor = UIColor.clear
         tableName.separatorColor = UIColor(red: 0.333, green: 0.333, blue: 0.333, alpha: 1)
-        tableName.sectionHeaderHeight = 48 * multiplier
-        tableName.sectionFooterHeight = 48 * multiplier
         tableName.headerView(forSection: 0)?.layer.cornerRadius = 16
-        view.addSubview(tableName)
+        scroll.addSubview(tableName)
         tableName.translatesAutoresizingMaskIntoConstraints = false
-        tableName.topAnchor.constraint(equalTo: view.topAnchor, constant: 156 * (UIScreen.main.bounds.width / 375)).isActive = true
+        tableName.topAnchor.constraint(equalTo: view.topAnchor, constant: 156 * multiplier).isActive = true
         tableName.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        tableName.heightAnchor.constraint(equalToConstant: 270 * multiplier).isActive = true
+        tableName.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         tableName.widthAnchor.constraint(equalToConstant: 335 * multiplier).isActive = true
+        tableName.isScrollEnabled = false
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return 6
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -81,9 +91,13 @@ class NewGameVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
+    func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
+        54 * multiplier
+    }
+        
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView()
-        let header = UILabel(frame: CGRect(x: 0, y: 0, width: 335 * multiplier, height: 50 * multiplier))
+        let header = UILabel(frame: CGRect(x: 0, y: 0, width: tableName.frame.width, height: 55 * multiplier))
         header.backgroundColor = UIColor(red: 0.231, green: 0.231, blue: 0.231, alpha: 1)
         let content = UILabel(frame: CGRect(x: 16 * multiplier, y: 16 * multiplier, width: 309 * multiplier, height: 24 * multiplier))
         content.numberOfLines = 0
@@ -103,9 +117,13 @@ class NewGameVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
         return headerView
     }
     
+    func tableView(_ tableView: UITableView, estimatedHeightForFooterInSection section: Int) -> CGFloat {
+        54 * multiplier
+    }
+
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let footerView = UIView()
-        let footer = UILabel(frame: CGRect(x: 0, y: 0, width: 335 * multiplier, height: 46 * multiplier))
+        let footer = UILabel(frame: CGRect(x: 0, y: -1, width: tableName.frame.width, height: 54 * multiplier))
         footer.backgroundColor = UIColor(red: 0.231, green: 0.231, blue: 0.231, alpha: 1)
         let content = UILabel(frame: CGRect(x: 56 * multiplier, y: 14 * multiplier, width: 250 * multiplier, height: 24 * multiplier))
         content.numberOfLines = 0

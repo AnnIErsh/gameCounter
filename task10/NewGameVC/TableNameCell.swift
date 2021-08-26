@@ -21,6 +21,5 @@ class TableNameCell: UITableViewCell {
         super.layoutSubviews()
         self.backgroundColor = UIColor(red: 0.231, green: 0.231, blue: 0.231, alpha: 1)
         self.selectionStyle = .none
-
       }
 }
