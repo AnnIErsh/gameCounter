@@ -69,8 +69,9 @@ class NewGameVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     
     func addStartGameWithConstraints(_ margins: UIView) {
         startGame.translatesAutoresizingMaskIntoConstraints = false
-        startGame.topAnchor.constraint(equalTo: margins.bottomAnchor, constant: 165 * multiplier).isActive = true
-        startGame.widthAnchor.constraint(equalToConstant: tableName.frame.width).isActive = true
+        startGame.topAnchor.constraint(equalTo: margins.bottomAnchor, constant: 65 * multiplier).isActive = true
+        startGame.centerXAnchor.constraint(equalTo: margins.centerXAnchor).isActive = true
+        startGame.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
         startGame.heightAnchor.constraint(equalToConstant: 65 * multiplier).isActive = true
     }
     
@@ -92,7 +93,7 @@ class NewGameVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 26
+        return 3
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -111,14 +112,16 @@ class NewGameVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         300 * multiplier
     }
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        54 * multiplier
+    }
         
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView()
-        let header = UILabel(frame: CGRect(x: 0, y: 0, width: tableName.frame.width, height: 55 * multiplier))
+        let header = UILabel(frame: CGRect(x: 0, y: 0, width: tableName.frame.width, height: 54 * multiplier))
         header.backgroundColor = UIColor(red: 0.231, green: 0.231, blue: 0.231, alpha: 1)
         let content = UILabel(frame: CGRect(x: 24 * multiplier, y: 16 * multiplier, width: 309 * multiplier, height: 24 * multiplier))
-        content.numberOfLines = 0
-        content.text = "players"
         content.textColor = UIColor(red: 0.922, green: 0.922, blue: 0.961, alpha: 0.6)
         content.font = UIFont(name: "Nunito-SemiBold", size: 16)
         let paragraphStyle = NSMutableParagraphStyle()
@@ -134,18 +137,19 @@ class NewGameVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         return headerView
     }
     
-    func tableView(_ tableView: UITableView, estimatedHeightForFooterInSection section: Int) -> CGFloat {
-        300 * multiplier
-    }
-
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let footerView = UIView()
-        let footer = UILabel(frame: CGRect(x: 0, y: 0, width: tableName.frame.width, height: 54 * multiplier))
+        let footer = UIView(frame: CGRect(x: 0, y: -1 * multiplier, width: tableName.frame.width, height: 70 * multiplier))
         footer.backgroundColor = UIColor(red: 0.231, green: 0.231, blue: 0.231, alpha: 1)
         let imgView = UIImageView(frame: CGRect(x: 16 * multiplier, y: footer.bounds.height / 2 - (14 * multiplier), width: 30 * multiplier, height: 30 * multiplier))
         imgView.image = UIImage(named: "add")
         footer.addSubview(imgView)
-        let content = UILabel(frame: CGRect(x: 56 * multiplier, y: 14 * multiplier, width: 250 * multiplier, height: 24 * multiplier))
+        
+        let lineView = UIView(frame: CGRect(x: 18 * multiplier, y: 0, width: footer.bounds.width - 18 * multiplier, height: 0.8))
+        lineView.backgroundColor = UIColor(red: 0.333, green: 0.333, blue: 0.333, alpha: 1)
+        footer.addSubview(lineView)
+        
+        let content = UILabel(frame: CGRect(x: 56 * multiplier, y: footer.bounds.height / 2 - (15 * multiplier), width: 250 * multiplier, height: 30 * multiplier))
         content.numberOfLines = 0
         content.textColor = UIColor(red: 0.518, green: 0.722, blue: 0.678, alpha: 1)
         content.font = UIFont(name: "Nunito-SemiBold", size: 16)

@@ -29,7 +29,7 @@ extension UIButton {
     
     func addStartButton(name: String) {
         self.layer.backgroundColor = UIColor(red: 0.518, green: 0.722, blue: 0.678, alpha: 1).cgColor
-        self.layer.cornerRadius = 100
+        self.layer.cornerRadius = 10
         self.titleLabel!.textColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
         self.titleLabel?.font = UIFont(name: "Nunito-ExtraBold", size: 24)
         let paragraphStyle = NSMutableParagraphStyle()
