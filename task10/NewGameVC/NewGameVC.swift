@@ -58,6 +58,7 @@ class NewGameVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     
     func addScrollWithConstraints() {
         view.addSubview(scroll)
+        scroll.isScrollEnabled = true
         scroll.translatesAutoresizingMaskIntoConstraints = false
         scroll.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         scroll.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
@@ -78,7 +79,8 @@ class NewGameVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         tableName.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         tableName.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         tableName.widthAnchor.constraint(equalToConstant: 335 * multiplier).isActive = true
-        tableName.isScrollEnabled = false
+        tableName.separatorStyle = .none
+        //tableName.isScrollEnabled = false
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -89,6 +91,13 @@ class NewGameVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         let cell = tableName.dequeueReusableCell(withIdentifier: "TableNameCell", for: indexPath)
         cell.textLabel?.text = "kek"
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.backgroundColor = UIColor(red: 0.231, green: 0.231, blue: 0.231, alpha: 1)
+        cell.setSelected(true, animated: false)
+        cell.showsReorderControl = true
+        cell.setEditing(true, animated: false)
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
@@ -141,5 +150,14 @@ class NewGameVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         footer.layer.mask = layer0
         return footerView
     }
+        
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        true
+    }
+    
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        tableName.reloadData()
+    }
+    
 }
 
