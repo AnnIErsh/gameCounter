@@ -12,6 +12,7 @@ class NewGameVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     var cancel = UIButton("Cancel")
     var name = UILabel("Game Counter")
     var scroll = UIScrollView(frame: UIScreen.main.bounds)
+    var startGame = UIButton(startButtonName: "Start game")
     var tableName = UITableView(frame: UIScreen.main.bounds, style: .grouped)
     let multiplier = UIScreen.main.bounds.width / 375
     var ratio: CGRect {
@@ -66,6 +67,13 @@ class NewGameVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         scroll.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
     }
     
+    func addStartGameWithConstraints(_ margins: UIView) {
+        startGame.translatesAutoresizingMaskIntoConstraints = false
+        startGame.topAnchor.constraint(equalTo: margins.bottomAnchor, constant: 165 * multiplier).isActive = true
+        startGame.widthAnchor.constraint(equalToConstant: tableName.frame.width).isActive = true
+        startGame.heightAnchor.constraint(equalToConstant: 65 * multiplier).isActive = true
+    }
+    
     func addTableWithConstraints() {
         tableName.register(TableNameCell.self, forCellReuseIdentifier: "TableNameCell")
         tableName.dataSource = self
@@ -80,16 +88,16 @@ class NewGameVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         tableName.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         tableName.widthAnchor.constraint(equalToConstant: 335 * multiplier).isActive = true
         tableName.separatorStyle = .none
-        //tableName.isScrollEnabled = false
+        tableName.showsVerticalScrollIndicator = false
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 6
+        return 26
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableName.dequeueReusableCell(withIdentifier: "TableNameCell", for: indexPath)
-        cell.textLabel?.text = "kek"
+        cell.textLabel?.addStyleToNameLabelInTable(name: "kek")
         return cell
     }
     
@@ -100,15 +108,15 @@ class NewGameVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         cell.setEditing(true, animated: false)
     }
     
-    func tableView(_ tableView: UITableView, estimatedHeightForHeaderInSection section: Int) -> CGFloat {
-        54 * multiplier
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        300 * multiplier
     }
         
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView()
         let header = UILabel(frame: CGRect(x: 0, y: 0, width: tableName.frame.width, height: 55 * multiplier))
         header.backgroundColor = UIColor(red: 0.231, green: 0.231, blue: 0.231, alpha: 1)
-        let content = UILabel(frame: CGRect(x: 16 * multiplier, y: 16 * multiplier, width: 309 * multiplier, height: 24 * multiplier))
+        let content = UILabel(frame: CGRect(x: 24 * multiplier, y: 16 * multiplier, width: 309 * multiplier, height: 24 * multiplier))
         content.numberOfLines = 0
         content.text = "players"
         content.textColor = UIColor(red: 0.922, green: 0.922, blue: 0.961, alpha: 0.6)
@@ -127,7 +135,7 @@ class NewGameVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     }
     
     func tableView(_ tableView: UITableView, estimatedHeightForFooterInSection section: Int) -> CGFloat {
-        54 * multiplier
+        300 * multiplier
     }
 
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
@@ -139,7 +147,7 @@ class NewGameVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         footer.addSubview(imgView)
         let content = UILabel(frame: CGRect(x: 56 * multiplier, y: 14 * multiplier, width: 250 * multiplier, height: 24 * multiplier))
         content.numberOfLines = 0
-        content.textColor = UIColor(red: 0.922, green: 0.922, blue: 0.961, alpha: 0.6)
+        content.textColor = UIColor(red: 0.518, green: 0.722, blue: 0.678, alpha: 1)
         content.font = UIFont(name: "Nunito-SemiBold", size: 16)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 1.1
@@ -150,6 +158,8 @@ class NewGameVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         let layer0 = CAShapeLayer()
         layer0.path = path0.cgPath
         footer.layer.mask = layer0
+        footerView.addSubview(startGame)
+        addStartGameWithConstraints(footer)
         return footerView
     }
             
