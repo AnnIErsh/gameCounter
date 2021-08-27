@@ -22,7 +22,9 @@ class TableNameCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.backgroundView = UIView(frame: CGRect(x: 16 * multiplier, y: self.bounds.height - 0.2, width: self.bounds.width - 16 * multiplier, height: 0.5))
+        self.imageView?.frame = CGRect(x: 16 * multiplier, y: self.bounds.height / 2 - (14 * multiplier), width: 30 * multiplier, height: 30 * multiplier)
+        self.imageView?.image = UIImage(named: "remove")
+        self.backgroundView = UIView(frame: CGRect(x: 18 * multiplier, y: self.bounds.height - (0.5 * multiplier), width: self.bounds.width - 18 * multiplier, height: 0.5))
         self.backgroundView?.backgroundColor = UIColor(red: 0.333, green: 0.333, blue: 0.333, alpha: 1)
         self.selectionStyle = .none
     }

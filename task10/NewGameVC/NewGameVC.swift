@@ -132,8 +132,11 @@ class NewGameVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
 
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let footerView = UIView()
-        let footer = UILabel(frame: CGRect(x: 0, y: -1, width: tableName.frame.width, height: 54 * multiplier))
+        let footer = UILabel(frame: CGRect(x: 0, y: 0, width: tableName.frame.width, height: 54 * multiplier))
         footer.backgroundColor = UIColor(red: 0.231, green: 0.231, blue: 0.231, alpha: 1)
+        let imgView = UIImageView(frame: CGRect(x: 16 * multiplier, y: footer.bounds.height / 2 - (14 * multiplier), width: 30 * multiplier, height: 30 * multiplier))
+        imgView.image = UIImage(named: "add")
+        footer.addSubview(imgView)
         let content = UILabel(frame: CGRect(x: 56 * multiplier, y: 14 * multiplier, width: 250 * multiplier, height: 24 * multiplier))
         content.numberOfLines = 0
         content.textColor = UIColor(red: 0.922, green: 0.922, blue: 0.961, alpha: 0.6)
@@ -145,12 +148,11 @@ class NewGameVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         footerView.addSubview(footer)
         let path0 = UIBezierPath(roundedRect: footer.frame, byRoundingCorners: [.bottomLeft, .bottomRight], cornerRadii: CGSize(width: 16, height: 16))
         let layer0 = CAShapeLayer()
-        layer0.backgroundColor = UIColor.yellow.cgColor
         layer0.path = path0.cgPath
         footer.layer.mask = layer0
         return footerView
     }
-        
+            
     func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         true
     }
@@ -159,5 +161,8 @@ class NewGameVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         tableName.reloadData()
     }
     
+    func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
+        "Remove"
+    }
 }
 
