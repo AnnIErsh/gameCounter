@@ -71,7 +71,7 @@ class NewGameVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         startGame.translatesAutoresizingMaskIntoConstraints = false
         startGame.topAnchor.constraint(equalTo: margins.bottomAnchor, constant: 65 * multiplier).isActive = true
         startGame.centerXAnchor.constraint(equalTo: margins.centerXAnchor).isActive = true
-        startGame.widthAnchor.constraint(equalToConstant: view.frame.width).isActive = true
+        startGame.widthAnchor.constraint(equalToConstant: tableName.bounds.width).isActive = true
         startGame.heightAnchor.constraint(equalToConstant: 65 * multiplier).isActive = true
     }
     
@@ -136,7 +136,7 @@ class NewGameVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         header.layer.mask = layer0
         return headerView
     }
-    
+   
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let footerView = UIView()
         let footer = UIView(frame: CGRect(x: 0, y: -1 * multiplier, width: tableName.frame.width, height: 70 * multiplier))
@@ -144,11 +144,9 @@ class NewGameVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         let imgView = UIImageView(frame: CGRect(x: 16 * multiplier, y: footer.bounds.height / 2 - (14 * multiplier), width: 30 * multiplier, height: 30 * multiplier))
         imgView.image = UIImage(named: "add")
         footer.addSubview(imgView)
-        
         let lineView = UIView(frame: CGRect(x: 18 * multiplier, y: 0, width: footer.bounds.width - 18 * multiplier, height: 0.8))
         lineView.backgroundColor = UIColor(red: 0.333, green: 0.333, blue: 0.333, alpha: 1)
         footer.addSubview(lineView)
-        
         let content = UILabel(frame: CGRect(x: 56 * multiplier, y: footer.bounds.height / 2 - (15 * multiplier), width: 250 * multiplier, height: 30 * multiplier))
         content.numberOfLines = 0
         content.textColor = UIColor(red: 0.518, green: 0.722, blue: 0.678, alpha: 1)
@@ -163,10 +161,11 @@ class NewGameVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         layer0.path = path0.cgPath
         footer.layer.mask = layer0
         footerView.addSubview(startGame)
+        startGame.layer.cornerRadius = 30 * multiplier
         addStartGameWithConstraints(footer)
         return footerView
     }
-            
+    
     func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
         true
     }

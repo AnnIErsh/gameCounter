@@ -28,23 +28,18 @@ extension UIButton {
     }
     
     func addStartButton(name: String) {
-        self.layer.backgroundColor = UIColor(red: 0.518, green: 0.722, blue: 0.678, alpha: 1).cgColor
-        self.layer.cornerRadius = 10
-        self.titleLabel!.textColor = UIColor(red: 1, green: 1, blue: 1, alpha: 1)
-        self.titleLabel?.font = UIFont(name: "Nunito-ExtraBold", size: 24)
+        self.backgroundColor = UIColor(red: 0.518, green: 0.722, blue: 0.678, alpha: 1)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 1.25
-        self.titleLabel!.attributedText = NSMutableAttributedString(string: name, attributes: [NSAttributedString.Key.paragraphStyle: paragraphStyle])
-        let shadowPath0 = UIBezierPath(roundedRect: self.titleLabel!.bounds, cornerRadius: 0)
-        let layer0 = CALayer()
-        layer0.shadowPath = shadowPath0.cgPath
-        layer0.shadowColor = UIColor(red: 0.329, green: 0.471, blue: 0.435, alpha: 1).cgColor
-        layer0.shadowOpacity = 1
-        layer0.shadowRadius = 0
-        layer0.shadowOffset = CGSize(width: 0, height: 2)
-        layer0.bounds = self.titleLabel!.bounds
-        layer0.position = self.titleLabel!.center
-        self.titleLabel!.layer.addSublayer(layer0)
+        let myShadow = NSShadow()
+        myShadow.shadowBlurRadius = 0
+        myShadow.shadowOffset = CGSize(width: 0, height: 2)
+        myShadow.shadowColor = UIColor(red: 0.329, green: 0.471, blue: 0.435, alpha: 1)
+        self.setAttributedTitle(NSMutableAttributedString(string: name, attributes: [NSAttributedString.Key.shadow: myShadow, NSAttributedString.Key.paragraphStyle: paragraphStyle, NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont(name: "Nunito-ExtraBold", size: 24)!]), for: .normal)
+        self.layer.shadowColor = UIColor(red: 0.518, green: 0.722, blue: 0.678, alpha: 0.7).cgColor
+        self.layer.shadowOffset = CGSize(width: 0.0, height: 5.0)
+        self.layer.shadowOpacity = 1.0
+        self.layer.shadowRadius = 0.0
     }
     
     func addConstraintsToButton(_ margins : inout UIView, _ ratio: CGRect) {
