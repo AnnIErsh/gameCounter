@@ -7,14 +7,16 @@
 
 import UIKit
 
-class NewGameVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
-
+class NewGameVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, UIGestureRecognizerDelegate {
+    
     var cancel = UIButton("Cancel")
     var name = UILabel("Game Counter")
-    var scroll = UIScrollView(frame: UIScreen.main.bounds)
+    var bigContent = UIView(frame: UIScreen.main.bounds)
     var startGame = UIButton(startButtonName: "Start game")
     var tableName = UITableView(frame: UIScreen.main.bounds, style: .grouped)
     let multiplier = UIScreen.main.bounds.width / 375
+    var players = Players.names
+    var nameIndexPath = IndexPath()
     var ratio: CGRect {
         get {
             let x = 20 * multiplier
@@ -34,7 +36,7 @@ class NewGameVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
             return CGRect(x: x, y: y, width: w, height: h)
         }
     }
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.layer.backgroundColor = UIColor(red: 0.136, green: 0.136, blue: 0.138, alpha: 1).cgColor
@@ -52,19 +54,18 @@ class NewGameVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     }
     
     func addTitleName() {
-        scroll.addSubview(name)
+        bigContent.addSubview(name)
         var tmpView = tableName as UIView
         name.addConstraintsToNameLabel(&tmpView, ratioName)
     }
     
     func addScrollWithConstraints() {
-        view.addSubview(scroll)
-        scroll.isScrollEnabled = true
-        scroll.translatesAutoresizingMaskIntoConstraints = false
-        scroll.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        scroll.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        scroll.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-        scroll.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+        view.addSubview(bigContent)
+        bigContent.translatesAutoresizingMaskIntoConstraints = false
+        bigContent.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        bigContent.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        bigContent.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+        bigContent.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
     }
     
     func addStartGameWithConstraints(_ margins: UIView) {
@@ -82,7 +83,7 @@ class NewGameVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         tableName.backgroundColor = UIColor.clear
         tableName.separatorColor = UIColor(red: 0.333, green: 0.333, blue: 0.333, alpha: 1)
         tableName.headerView(forSection: 0)?.layer.cornerRadius = 16
-        scroll.addSubview(tableName)
+        bigContent.addSubview(tableName)
         tableName.translatesAutoresizingMaskIntoConstraints = false
         tableName.topAnchor.constraint(equalTo: view.topAnchor, constant: 156 * multiplier).isActive = true
         tableName.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
@@ -93,16 +94,17 @@ class NewGameVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return players.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableName.dequeueReusableCell(withIdentifier: "TableNameCell", for: indexPath)
-        cell.textLabel?.addStyleToNameLabelInTable(name: "kek")
+        cell.textLabel?.addStyleToNameLabelInTable(name: players[indexPath.row])
         return cell
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        nameIndexPath = indexPath
         cell.backgroundColor = UIColor(red: 0.231, green: 0.231, blue: 0.231, alpha: 1)
         cell.setSelected(true, animated: false)
         cell.showsReorderControl = true
@@ -116,7 +118,7 @@ class NewGameVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         54 * multiplier
     }
-        
+    
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView()
         let header = UILabel(frame: CGRect(x: 0, y: 0, width: tableName.frame.width, height: 54 * multiplier))
@@ -136,13 +138,16 @@ class NewGameVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         header.layer.mask = layer0
         return headerView
     }
-   
+    
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let footerView = UIView()
         let footer = UIView(frame: CGRect(x: 0, y: -1 * multiplier, width: tableName.frame.width, height: 70 * multiplier))
         footer.backgroundColor = UIColor(red: 0.231, green: 0.231, blue: 0.231, alpha: 1)
         let imgView = UIImageView(frame: CGRect(x: 16 * multiplier, y: footer.bounds.height / 2 - (14 * multiplier), width: 30 * multiplier, height: 30 * multiplier))
         imgView.image = UIImage(named: "add")
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_ :)))
+        imgView.isUserInteractionEnabled = true
+        imgView.addGestureRecognizer(tap)
         footer.addSubview(imgView)
         let lineView = UIView(frame: CGRect(x: 18 * multiplier, y: 0, width: footer.bounds.width - 18 * multiplier, height: 0.8))
         lineView.backgroundColor = UIColor(red: 0.333, green: 0.333, blue: 0.333, alpha: 1)
@@ -171,11 +176,25 @@ class NewGameVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     }
     
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        if (sourceIndexPath != destinationIndexPath) {
+            let player = players[sourceIndexPath.row]
+            players.remove(at: sourceIndexPath.row)
+            players.insert(player, at: destinationIndexPath.row)
+            tableName.moveRow(at: sourceIndexPath, to: destinationIndexPath)
+        }
         tableName.reloadData()
     }
     
     func tableView(_ tableView: UITableView, titleForDeleteConfirmationButtonForRowAt indexPath: IndexPath) -> String? {
         "Remove"
+    }
+    
+    // MARK: action
+    
+    @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {
+        print("add")
+        let addVC = AddPlayerVC()
+        self.addChildVC(addVC)
     }
 }
 
