@@ -99,6 +99,7 @@ class AddPlayerVC: UIViewController, UITextFieldDelegate {
             view.endEditing(true)
             print("new name added")
             parentVC?.players.append(textFieldName.text!)
+            parentVC?.checkIfEmpty()
             parentVC?.tableName.reloadData()
             self.removeChildVC(self)
         }

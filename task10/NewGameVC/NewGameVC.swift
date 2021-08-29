@@ -193,6 +193,17 @@ class NewGameVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         "Remove"
     }
     
+    func checkIfEmpty() {
+        if players.isEmpty {
+            startGame.isUserInteractionEnabled = false
+            startGame.alpha = 0.5
+        }
+        else {
+            startGame.isUserInteractionEnabled = true
+            startGame.alpha = 1
+        }
+    }
+    
     // MARK: action
     
     @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {
@@ -205,6 +216,7 @@ class NewGameVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         print("remove")
         let tmpView = sender!.view as! UIImageView
         players.remove(at: tmpView.tag)
+        checkIfEmpty()
         tableName.reloadData()
     }
 }
