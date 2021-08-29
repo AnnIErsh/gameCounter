@@ -119,17 +119,17 @@ extension UILabel {
     
     func addConstraintsToHeader(_ margins : inout UIView, multiplier: CGFloat, _ leadView: UIButton, _ tmp: UILabel) {
         self.translatesAutoresizingMaskIntoConstraints = false
-        self.bottomAnchor.constraint(equalTo: margins.topAnchor, constant: -25 * multiplier).isActive = true
-        self.leadingAnchor.constraint(equalTo: leadView.leadingAnchor).isActive = true
+        self.topAnchor.constraint(equalTo: margins.bottomAnchor, constant: 16 * multiplier).isActive = true
+        self.leadingAnchor.constraint(equalTo: margins.leadingAnchor).isActive = true
         self.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width).isActive = true
         self.heightAnchor.constraint(equalToConstant: tmp.frame.height).isActive = true
     }
     
     func addConstraintsToToTimer(_ margins: UIView, multiplier: CGFloat) {
         self.translatesAutoresizingMaskIntoConstraints = false
-        self.topAnchor.constraint(equalTo: margins.topAnchor, constant: 160 * multiplier).isActive = true
+        self.topAnchor.constraint(equalTo: margins.topAnchor).isActive = true
         self.centerXAnchor.constraint(equalTo: margins.centerXAnchor).isActive = true
-        self.widthAnchor.constraint(equalToConstant: 80 * multiplier).isActive = true
+        self.widthAnchor.constraint(equalToConstant: 90 * multiplier).isActive = true
         self.heightAnchor.constraint(equalToConstant: 41 * multiplier).isActive = true
     }
 }
@@ -193,11 +193,56 @@ extension UITextField {
 }
 
 extension UIImageView {
-    func addConstraintsToDice(_ margins: UILabel, multiplier: CGFloat, _ topMargin: UIButton) {
+    func addConstraintsToDice(multiplier: CGFloat, _ topMargin: UIButton) {
         self.translatesAutoresizingMaskIntoConstraints = false
-        self.topAnchor.constraint(equalTo: margins.topAnchor, constant: -5).isActive = true
+        self.topAnchor.constraint(equalTo: topMargin.bottomAnchor, constant: 16 * multiplier).isActive = true
         self.heightAnchor.constraint(equalToConstant: 36).isActive = true
         self.widthAnchor.constraint(equalToConstant: 36).isActive = true
         self.trailingAnchor.constraint(equalTo: topMargin.trailingAnchor).isActive = true
+    }
+}
+
+extension UICollectionView {
+    func addConstraintsToCV(multiplier: CGFloat, _ top: UILabel) {
+        self.translatesAutoresizingMaskIntoConstraints = false
+        self.topAnchor.constraint(equalTo: top.bottomAnchor, constant: 12 * multiplier).isActive = true
+        self.centerXAnchor.constraint(equalTo: superview!.centerXAnchor).isActive = true
+        self.widthAnchor.constraint(equalTo: superview!.widthAnchor).isActive = true
+        self.bottomAnchor.constraint(equalTo: superview!.bottomAnchor, constant: -1 * multiplier).isActive = true
+    }
+}
+
+extension UIView {
+    func addConstraintsToContsiner(_ margins: UILabel, multiplier: CGFloat, _ topMargin: UIButton) {
+        self.translatesAutoresizingMaskIntoConstraints = false
+        self.topAnchor.constraint(equalTo: margins.bottomAnchor, constant: 42 * multiplier).isActive = true
+        self.heightAnchor.constraint(equalToConstant: 36).isActive = true
+        self.widthAnchor.constraint(equalToConstant: 36).isActive = true
+        self.trailingAnchor.constraint(equalTo: topMargin.trailingAnchor).isActive = true
+    }
+}
+
+extension GameProcessVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: cv.frame.width / 1.5, height: cv.frame.height / 2)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        parentVC!.players.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = cv.dequeueReusableCell(withReuseIdentifier: "GameCell", for: indexPath) as! GameCell
+        cell.backgroundColor = .green
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        20 * parentVC!.multiplier
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        UIEdgeInsets(top: 0, left: 10, bottom: 160 * parentVC!.multiplier, right: 10)
     }
 }

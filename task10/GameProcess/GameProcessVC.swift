@@ -16,6 +16,15 @@ class GameProcessVC: UIViewController {
     var timer = UILabel(timerName: "15:00")
     var dice = UIImageView(image: UIImage(named: "Dice_4"))
     var play = PlayButton()
+    var cv: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .horizontal
+        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        cv.register(GameCell.self, forCellWithReuseIdentifier: "GameCell")
+        cv.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "GameHeader")
+        cv.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "GameFooter")
+        return cv
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,17 +36,29 @@ class GameProcessVC: UIViewController {
     func addHeaderAndTimer() {
         view.addSubview(newGame)
         view.addSubview(results)
+        view.addSubview(cv)
         view.addSubview(game)
         view.addSubview(dice)
-        view.addSubview(timer)
-        view.addSubview(play)
+//        view.addSubview(play)
+//        view.addSubview(cv)
         newGame.addConstraintsToButton(&view, parentVC!.ratio)
         results.addConstraintsToButtonReverse(&view, parentVC!.ratio)
-        timer.addConstraintsToToTimer(view, multiplier: parentVC!.multiplier)
-        play.addConstraintsToPlay(timer, multiplier: parentVC!.multiplier)
-        var tmp = timer as UIView
+        var tmp = newGame as UIView
         game.addConstraintsToHeader(&tmp, multiplier: parentVC!.multiplier, newGame, parentVC!.name)
-        dice.addConstraintsToDice(game, multiplier: parentVC!.multiplier, results)
+        dice.addConstraintsToDice(multiplier: parentVC!.multiplier, results)
+//        var tmp = timer as UIView
+//        game.addConstraintsToHeader(&tmp, multiplier: parentVC!.multiplier, newGame, parentVC!.name)
+//        timer.addConstraintsToToTimer(view, multiplier: parentVC!.multiplier)
+//        play.addConstraintsToPlay(timer, multiplier: parentVC!.multiplier)
+//        dice.addConstraintsToDice(game, multiplier: parentVC!.multiplier, results)
+        cv.addConstraintsToCV(multiplier: parentVC!.multiplier, game)
+        //cv.backgroundColor = view.backgroundColor
+        cv.delegate = self
+        cv.dataSource = self
+        view.addSubview(timer)
+        timer.addConstraintsToToTimer(cv as UIView, multiplier: parentVC!.multiplier)
+        view.addSubview(play)
+        play.addConstraintsToPlay(timer, multiplier: parentVC!.multiplier)
     }
 }
 
