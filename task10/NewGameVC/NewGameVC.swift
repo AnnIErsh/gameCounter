@@ -22,7 +22,7 @@ class NewGameVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
             let x = 20 * multiplier
             let y = 37 * multiplier
             let h = 41 * multiplier
-            let w: CGFloat = 53
+            let w: CGFloat = 100 * multiplier
             return CGRect(x: x, y: y, width: w, height: h)
         }
     }
@@ -74,6 +74,7 @@ class NewGameVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         startGame.centerXAnchor.constraint(equalTo: margins.centerXAnchor).isActive = true
         startGame.widthAnchor.constraint(equalToConstant: tableName.bounds.width).isActive = true
         startGame.heightAnchor.constraint(equalToConstant: 65 * multiplier).isActive = true
+        startGame.addTarget(self, action: #selector(startGameTap(_:)), for: .touchUpInside)
     }
     
     func addTableWithConstraints() {
@@ -219,5 +220,12 @@ class NewGameVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         checkIfEmpty()
         tableName.reloadData()
     }
+    
+    @objc func startGameTap(_ sender: UIButton) {
+        print("start game")
+        let gameVC = GameProcessVC()
+        self.addChildVC(gameVC)
+    }
 }
+
 

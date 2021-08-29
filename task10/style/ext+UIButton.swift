@@ -37,10 +37,10 @@ extension UIButton {
         myShadow.shadowOffset = CGSize(width: 0, height: 2)
         myShadow.shadowColor = UIColor(red: 0.329, green: 0.471, blue: 0.435, alpha: 1)
         self.setAttributedTitle(NSMutableAttributedString(string: name, attributes: [NSAttributedString.Key.shadow: myShadow, NSAttributedString.Key.paragraphStyle: paragraphStyle, NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont(name: "Nunito-ExtraBold", size: 24)!]), for: .normal)
-        self.layer.shadowColor = UIColor(red: 0.518, green: 0.722, blue: 0.678, alpha: 0.7).cgColor
-        self.layer.shadowOffset = CGSize(width: 0.0, height: 5.0)
-        self.layer.shadowOpacity = 1.0
-        self.layer.shadowRadius = 0.0
+        layer.shadowColor = UIColor(red: 0.518, green: 0.722, blue: 0.678, alpha: 0.7).cgColor
+        layer.shadowOffset = CGSize(width: 0.0, height: 5.0)
+        layer.shadowOpacity = 1.0
+        layer.shadowRadius = 0.0
     }
     
     func addConstraintsToButton(_ margins : inout UIView, _ ratio: CGRect) {
@@ -49,6 +49,7 @@ extension UIButton {
         self.leadingAnchor.constraint(equalTo: margins.leadingAnchor , constant: ratio.origin.x).isActive = true
         self.heightAnchor.constraint(equalToConstant: ratio.height).isActive = true
         self.widthAnchor.constraint(equalToConstant: ratio.width).isActive = true
+        self.contentHorizontalAlignment = .leading
     }
     
     func addConstraintsToButtonReverse(_ margins : inout UIView, _ ratio: CGRect) {
@@ -57,6 +58,7 @@ extension UIButton {
         self.trailingAnchor.constraint(equalTo: margins.trailingAnchor , constant: -ratio.origin.x).isActive = true
         self.heightAnchor.constraint(equalToConstant: ratio.height).isActive = true
         self.widthAnchor.constraint(equalToConstant: ratio.width).isActive = true
+        self.contentHorizontalAlignment = .trailing
     }
 }
 
@@ -67,6 +69,11 @@ extension UILabel {
         addStyleToNameLanel(name: name)
     }
     
+    convenience init(timerName : String) {
+        self.init()
+        addStyleToTimer(name: timerName)
+    }
+    
     func addStyleToNameLanel(name : String) {
         self.font = UIFont(name: "Nunito-ExtraBold", size: 36)
         let paragraphStyle = NSMutableParagraphStyle()
@@ -74,6 +81,14 @@ extension UILabel {
         self.attributedText = (NSAttributedString(string: name, attributes: [NSAttributedString.Key.paragraphStyle: paragraphStyle]))
         self.textColor = .white
         self.numberOfLines = 0
+    }
+    
+    func addStyleToTimer(name: String) {
+        self.font = UIFont(name: "Nunito-ExtraBold", size: 28)
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineHeightMultiple = 1.07
+        self.attributedText = (NSAttributedString(string: name, attributes: [NSAttributedString.Key.paragraphStyle: paragraphStyle]))
+        self.textColor = UIColor(red: 0.231, green: 0.231, blue: 0.231, alpha: 1)
     }
     
     func addStyleToNameLabelInTable(name : String) {
@@ -89,7 +104,9 @@ extension UILabel {
         self.bottomAnchor.constraint(equalTo: margins.topAnchor, constant: -ratio.origin.y).isActive = true
         self.leadingAnchor.constraint(equalTo: margins.leadingAnchor).isActive = true
         self.widthAnchor.constraint(equalTo: margins.widthAnchor).isActive = true
-        self.heightAnchor.constraint(equalToConstant: ratio.height).isActive = true
+       // self.heightAnchor.constraint(equalToConstant: ratio.height).isActive = true
+        self.numberOfLines = 0
+        self.sizeToFit()
     }
     
     func addConstraintsToAddPlayer(_ margins : inout UIView, multiplier: CGFloat) {
@@ -98,6 +115,22 @@ extension UILabel {
         self.leadingAnchor.constraint(equalTo: margins.leadingAnchor, constant: 20 * multiplier).isActive = true
         self.widthAnchor.constraint(lessThanOrEqualTo: margins.widthAnchor).isActive = true
         self.heightAnchor.constraint(equalToConstant: 60 * multiplier).isActive = true
+    }
+    
+    func addConstraintsToHeader(_ margins : inout UIView, multiplier: CGFloat, _ leadView: UIButton, _ tmp: UILabel) {
+        self.translatesAutoresizingMaskIntoConstraints = false
+        self.bottomAnchor.constraint(equalTo: margins.topAnchor, constant: -25 * multiplier).isActive = true
+        self.leadingAnchor.constraint(equalTo: leadView.leadingAnchor).isActive = true
+        self.widthAnchor.constraint(equalToConstant: UIScreen.main.bounds.width).isActive = true
+        self.heightAnchor.constraint(equalToConstant: tmp.frame.height).isActive = true
+    }
+    
+    func addConstraintsToToTimer(_ margins: UIView, multiplier: CGFloat) {
+        self.translatesAutoresizingMaskIntoConstraints = false
+        self.topAnchor.constraint(equalTo: margins.topAnchor, constant: 160 * multiplier).isActive = true
+        self.centerXAnchor.constraint(equalTo: margins.centerXAnchor).isActive = true
+        self.widthAnchor.constraint(equalToConstant: 80 * multiplier).isActive = true
+        self.heightAnchor.constraint(equalToConstant: 41 * multiplier).isActive = true
     }
 }
 
@@ -153,8 +186,18 @@ extension UITextField {
     
     func addConstraintsToTextField(_ margins: UIView, multiplier: CGFloat) {
         self.translatesAutoresizingMaskIntoConstraints = false
-        self.topAnchor.constraint(equalTo: margins.topAnchor, constant: 156 * multiplier).isActive = true
+        self.topAnchor.constraint(equalTo: margins.topAnchor, constant: 160 * multiplier).isActive = true
         self.heightAnchor.constraint(equalToConstant: 60 * multiplier).isActive = true
         self.widthAnchor.constraint(equalTo: margins.widthAnchor).isActive = true
+    }
+}
+
+extension UIImageView {
+    func addConstraintsToDice(_ margins: UILabel, multiplier: CGFloat, _ topMargin: UIButton) {
+        self.translatesAutoresizingMaskIntoConstraints = false
+        self.topAnchor.constraint(equalTo: margins.topAnchor, constant: -5).isActive = true
+        self.heightAnchor.constraint(equalToConstant: 36).isActive = true
+        self.widthAnchor.constraint(equalToConstant: 36).isActive = true
+        self.trailingAnchor.constraint(equalTo: topMargin.trailingAnchor).isActive = true
     }
 }

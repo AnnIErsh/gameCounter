@@ -12,7 +12,7 @@ class AddPlayerVC: UIViewController, UITextFieldDelegate {
     var back = UIButton("Back")
     var add = UIButton("Add")
     var titleName = UILabel("Add player")
-    var parentVC: NewGameVC?
+    weak var parentVC: NewGameVC?
     var textFieldName = CustomTextField("Player Name")
     
     override func viewDidLoad() {
@@ -69,12 +69,10 @@ class AddPlayerVC: UIViewController, UITextFieldDelegate {
             print("enabled again")
             return true
         }
-        
         if textFieldName.text == "" {
             add.isEnabled = false
             print("not enabled")
         }
-        
         return false
     }
     
