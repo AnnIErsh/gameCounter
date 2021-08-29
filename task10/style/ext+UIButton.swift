@@ -25,6 +25,7 @@ extension UIButton {
         paragraphStyle.lineHeightMultiple = 1.77
         self.setAttributedTitle(NSAttributedString(string: name, attributes: [NSAttributedString.Key.paragraphStyle: paragraphStyle]), for: .normal)
         self.setTitleColor(UIColor(red: 0.518, green: 0.722, blue: 0.678, alpha: 1), for: .normal)
+        self.setTitleColor(.gray, for: .disabled)
     }
     
     func addStartButton(name: String) {
@@ -112,7 +113,7 @@ extension UIApplication {
     }
 }
 
-extension UIViewController {
+extension UIViewController: UIGestureRecognizerDelegate {
     
     func addChildVC(_ child: UIViewController) {
         self.addChild(child)
@@ -139,12 +140,14 @@ extension UITextField {
     
     func addTextView(_ name: String) {
         self.layer.backgroundColor = UIColor(red: 0.231, green: 0.231, blue: 0.231, alpha: 1).cgColor
-        self.textColor = UIColor(red: 0.608, green: 0.608, blue: 0.631, alpha: 1)
+        self.textColor = .white
         self.font = UIFont(name: "Nunito-ExtraBold", size: 20)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 0.88
         let str = NSMutableAttributedString(string: name, attributes: [NSAttributedString.Key.kern: 0.15, NSAttributedString.Key.paragraphStyle: paragraphStyle])
-        self.text = str.string
+        self.placeholder = str.string 
+        self.attributedPlaceholder = NSAttributedString(string:self.placeholder!,
+                                                        attributes:[NSAttributedString.Key.foregroundColor: UIColor(red: 0.608, green: 0.608, blue: 0.631, alpha: 1)])
         self.tintColor = .white
     }
     

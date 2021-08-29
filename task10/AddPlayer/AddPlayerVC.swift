@@ -27,7 +27,8 @@ class AddPlayerVC: UIViewController, UITextFieldDelegate {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        print(".....")
+        textFieldName.becomeFirstResponder()
+        add.isEnabled = false
     }
     
     func addBackAndInsertButtons() {
@@ -49,20 +50,62 @@ class AddPlayerVC: UIViewController, UITextFieldDelegate {
         var tmp = textFieldName as UIView
         titleName.addConstraintsToAddPlayer(&tmp, multiplier: parentVC!.multiplier)
     }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        let res = checkIfEnabled()
+        if res {
+            view.endEditing(true)
+            print("new name added")
+            parentVC?.players.append(textFieldName.text!)
+            parentVC?.tableName.reloadData()
+            self.removeChildVC(self)
+        }
+        return false
+    }
         
+    func checkIfEnabled() -> Bool {
+        if textFieldName.text != "" {
+            add.isEnabled = true
+            print("enabled again")
+            return true
+        }
+        
+        if textFieldName.text == "" {
+            add.isEnabled = false
+            print("not enabled")
+        }
+        
+        return false
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if let textVal = textFieldName.text,
+           let textRange = Range(range, in: textVal) {
+            let newText = textVal.replacingCharacters(in: textRange, with: string)
+            if newText == "" {
+                add.isEnabled = false
+            } else {
+                add.isEnabled = true
+                add.setTitleColor(back.currentTitleColor, for: .normal)
+            }
+        }
+         return true
+     }
+    
     // MARK: actions
     
     @objc func tapOnButton(_ sender: UIButton) {
-        if (sender.currentAttributedTitle?.string == "Back") {
+        if (sender.currentAttributedTitle?.string == "Add") {
+            view.endEditing(true)
+            print("new name added")
+            parentVC?.players.append(textFieldName.text!)
+            parentVC?.tableName.reloadData()
             self.removeChildVC(self)
         }
-        if (sender.currentAttributedTitle?.string == "Add") {
-            print("new name added")
+        else {
+            view.endEditing(true)
+            self.removeChildVC(self)
         }
-    }
-    
-    func textFieldDidBeginEditing(_ textField: UITextField) {
-        textField.text = ""
     }
 }
 
@@ -82,6 +125,4 @@ class CustomTextField: UITextField {
     override func placeholderRect(forBounds: CGRect) -> CGRect {
         return forBounds.insetBy(dx: self.deltaX, dy: self.deltaY)
     }
-    
-    
 }

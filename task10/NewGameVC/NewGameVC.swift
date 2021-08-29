@@ -7,7 +7,7 @@
 
 import UIKit
 
-class NewGameVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate, UIGestureRecognizerDelegate {
+class NewGameVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
     
     var cancel = UIButton("Cancel")
     var name = UILabel("Game Counter")
@@ -100,6 +100,10 @@ class NewGameVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableName.dequeueReusableCell(withIdentifier: "TableNameCell", for: indexPath)
         cell.textLabel?.addStyleToNameLabelInTable(name: players[indexPath.row])
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleRemove(_:)))
+        cell.imageView?.tag = indexPath.row
+        cell.imageView?.isUserInteractionEnabled = true
+        cell.imageView?.addGestureRecognizer(tap)
         return cell
     }
     
@@ -195,6 +199,13 @@ class NewGameVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         print("add")
         let addVC = AddPlayerVC()
         self.addChildVC(addVC)
+    }
+    
+    @objc func handleRemove(_ sender: UITapGestureRecognizer? = nil) {
+        print("remove")
+        let tmpView = sender!.view as! UIImageView
+        players.remove(at: tmpView.tag)
+        tableName.reloadData()
     }
 }
 
