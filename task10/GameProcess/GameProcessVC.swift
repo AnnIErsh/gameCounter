@@ -10,6 +10,13 @@ import UIKit
 class GameProcessVC: UIViewController {
 
     weak var parentVC: NewGameVC?
+    var currentTitle = UILabel() {
+        didSet {
+            oldValue.textColor = timer.textColor
+        }
+    }
+    var size = CGSize(width: 0, height: 0)
+    var reset = UIImageView(image: UIImage(named: "Reset"))
     var newGame = UIButton("New Game")
     var results = UIButton("Results")
     var game = UILabel("Game")
@@ -23,6 +30,7 @@ class GameProcessVC: UIViewController {
         cv.register(GameCell.self, forCellWithReuseIdentifier: "GameCell")
         cv.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "GameHeader")
         cv.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "GameFooter")
+        cv.showsHorizontalScrollIndicator = false
         return cv
     }()
     
@@ -58,6 +66,9 @@ class GameProcessVC: UIViewController {
         return container
     }()
     
+    var pageSrack: UIStackView!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.layer.backgroundColor = UIColor(red: 0.136, green: 0.136, blue: 0.138, alpha: 1).cgColor
@@ -88,6 +99,29 @@ class GameProcessVC: UIViewController {
         view.addSubview(container0)
         container0.addConstraintsToConteiner0(container1, multiplier: parentVC!.multiplier)
         cv.backgroundColor = view.backgroundColor
+        addPageTitles()
+        container1.addSubview(pageSrack)
+        pageSrack.addConstrainsToPage(parentVC!.multiplier)
+        pageSrack.addSubview(reset)
+        reset.addConstraintsToReset(multiplier: parentVC!.multiplier)
+    }
+    
+    func addPageTitles() {
+        let tmp: [String] = parentVC!.players
+        let res: Array<String> = tmp.map({ String($0.prefix(1)) })
+        let m = UIScreen.main.bounds.width / 375
+        var arr: Array<UILabel> = []
+        for i in 0 ... res.count - 1 {
+            let letter = UILabel(title: res[i])
+            letter.backgroundColor = cv.backgroundColor
+            letter.frame = CGRect(x: 0, y: 0, width: 15 * m, height: 20 * m)
+            arr.append(letter)
+        }
+        pageSrack = UIStackView(arrangedSubviews: arr)
+        pageSrack.axis = .horizontal
+        pageSrack.alignment = .center
+        pageSrack.distribution = .equalCentering
+        pageSrack.spacing = 5 * m
     }
 }
 
@@ -124,10 +158,3 @@ class PlayButton: UIButton {
         }
     }
 }
-
-//class ContainerView: UIView {
-//    override func layoutSubviews() {
-//        super.layoutSubviews()
-//        
-//    }
-//}
