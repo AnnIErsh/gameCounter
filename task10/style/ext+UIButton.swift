@@ -19,6 +19,32 @@ extension UIButton {
         addStartButton(name: startButtonName)
     }
     
+    convenience init(circleName: String) {
+        self.init()
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineHeightMultiple = 1
+        let myShadow = NSShadow()
+        myShadow.shadowBlurRadius = 0
+        myShadow.shadowOffset = CGSize(width: 0, height: 2)
+        myShadow.shadowColor = UIColor(red: 0.329, green: 0.471, blue: 0.435, alpha: 1)
+        self.setAttributedTitle(NSMutableAttributedString(string: circleName, attributes: [NSAttributedString.Key.shadow: myShadow, NSAttributedString.Key.paragraphStyle: paragraphStyle, NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont(name: "Nunito-ExtraBold", size: 25)!]), for: .normal)
+        self.setTitleColor(.white, for: .normal)
+        self.layer.backgroundColor = UIColor(red: 0.518, green: 0.722, blue: 0.678, alpha: 1).cgColor
+    }
+    
+    convenience init(bigCircleName: String) {
+        self.init()
+        let paragraphStyle = NSMutableParagraphStyle()
+        paragraphStyle.lineHeightMultiple = 1
+        let myShadow = NSShadow()
+        myShadow.shadowBlurRadius = 0
+        myShadow.shadowOffset = CGSize(width: 0, height: 2)
+        myShadow.shadowColor = UIColor(red: 0.329, green: 0.471, blue: 0.435, alpha: 1)
+        self.setAttributedTitle(NSMutableAttributedString(string: bigCircleName, attributes: [NSAttributedString.Key.shadow: myShadow, NSAttributedString.Key.paragraphStyle: paragraphStyle, NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont(name: "Nunito-ExtraBold", size: 40)!]), for: .normal)
+        self.setTitleColor(.white, for: .normal)
+        self.layer.backgroundColor = UIColor(red: 0.518, green: 0.722, blue: 0.678, alpha: 1).cgColor
+    }
+    
     func addStyleToNavigationButtons(name : String) {
         self.titleLabel?.font = UIFont(name: "Nunito-ExtraBold", size: 17)
         let paragraphStyle = NSMutableParagraphStyle()
@@ -220,12 +246,45 @@ extension UIView {
         self.widthAnchor.constraint(equalToConstant: 36).isActive = true
         self.trailingAnchor.constraint(equalTo: topMargin.trailingAnchor).isActive = true
     }
+    
+    func addConstraintsToConteiner0(_ margins: UIView, multiplier: CGFloat) {
+        self.translatesAutoresizingMaskIntoConstraints = false
+        self.bottomAnchor.constraint(equalTo: margins.topAnchor, constant: -22 * multiplier).isActive = true
+        self.heightAnchor.constraint(equalToConstant: 90 * multiplier).isActive = true
+        self.widthAnchor.constraint(equalTo: superview!.widthAnchor).isActive = true
+        self.centerXAnchor.constraint(equalTo: margins.centerXAnchor).isActive = true
+    }
+    
+    func addConstraintsToCircle(multiplier: CGFloat) {
+        self.translatesAutoresizingMaskIntoConstraints = false
+        self.topAnchor.constraint(equalTo: superview!.topAnchor).isActive = true
+        self.heightAnchor.constraint(equalToConstant: 90 * multiplier).isActive = true
+        self.widthAnchor.constraint(equalToConstant: 90 * multiplier).isActive = true
+        self.centerXAnchor.constraint(equalTo: superview!.centerXAnchor).isActive = true
+        self.layer.cornerRadius = 90 * multiplier / 2
+    }
+    
+    func addConstraintsToLeftArrow(_ margins: UIView, multiplier: CGFloat) {
+        self.translatesAutoresizingMaskIntoConstraints = false
+        self.leadingAnchor.constraint(equalTo: superview!.leadingAnchor, constant: 46 * multiplier).isActive = true
+        self.heightAnchor.constraint(equalToConstant: 30 * multiplier).isActive = true
+        self.widthAnchor.constraint(equalToConstant: 30 * multiplier).isActive = true
+        self.centerYAnchor.constraint(equalTo: margins.centerYAnchor).isActive = true
+    }
+    
+    func addConstraintsToRightArrow(_ margins: UIView, multiplier: CGFloat) {
+        self.translatesAutoresizingMaskIntoConstraints = false
+        self.trailingAnchor.constraint(equalTo: superview!.trailingAnchor, constant: -46 * multiplier).isActive = true
+        self.heightAnchor.constraint(equalToConstant: 30 * multiplier).isActive = true
+        self.widthAnchor.constraint(equalToConstant: 30 * multiplier).isActive = true
+        self.centerYAnchor.constraint(equalTo: margins.centerYAnchor).isActive = true
+    }
 }
 
 extension GameProcessVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: cv.frame.width / 1.5, height: cv.frame.height / 2)
+        return CGSize(width: cv.frame.width / 1.3, height: cv.frame.height / 2)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -244,5 +303,23 @@ extension GameProcessVC: UICollectionViewDelegate, UICollectionViewDataSource, U
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         UIEdgeInsets(top: 0, left: 10, bottom: 160 * parentVC!.multiplier, right: 10)
+    }
+}
+
+extension UIStackView {
+    
+    func addConstraintsToConteiner1(_ margins: UIView, multiplier: CGFloat) {
+        self.translatesAutoresizingMaskIntoConstraints = false
+        self.bottomAnchor.constraint(equalTo: margins.bottomAnchor, constant: -30 * multiplier).isActive = true
+        self.centerXAnchor.constraint(equalTo: margins.centerXAnchor).isActive = true
+        self.widthAnchor.constraint(equalTo: superview!.widthAnchor).isActive = true
+        self.heightAnchor.constraint(equalToConstant: 55 * multiplier).isActive = true
+    }
+    
+    open override func layoutSubviews() {
+        super.layoutSubviews()
+        for i in self.arrangedSubviews {
+            i.layer.cornerRadius = i.frame.size.height / 2
+        }
     }
 }
