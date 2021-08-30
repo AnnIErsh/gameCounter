@@ -30,5 +30,19 @@ extension GameProcessVC: UICollectionViewDelegate, UICollectionViewDataSource, U
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         UIEdgeInsets(top: 0, left: 46 * parentVC!.multiplier, bottom: 160 * parentVC!.multiplier, right: 46 * parentVC!.multiplier)
     }
-  
+
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
+        targetContentOffset.pointee = scrollView.contentOffset
+        var indexes = cv.indexPathsForVisibleItems
+        indexes.sort()
+        var index = indexes.first!
+        let cell = cv.cellForItem(at: index)!
+        let position = cv.contentOffset.x - cell.frame.origin.x
+        if position > cell.frame.size.width / 2{
+           index.row = index.row+1
+        }
+        cv.scrollToItem(at: index, at: .centeredHorizontally, animated: true)
+    }
 }
+
+
