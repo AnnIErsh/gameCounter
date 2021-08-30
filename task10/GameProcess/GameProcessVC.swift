@@ -10,7 +10,13 @@ import UIKit
 class GameProcessVC: UIViewController {
 
     weak var parentVC: NewGameVC?
-    var currentTitle = UILabel()
+    var left: UIImageView?
+    var right: UIImageView?
+    var currentTitle = UILabel() {
+        didSet {
+            oldValue.textColor = timer.textColor
+        }
+    }
     var scrollDetermined = false
     var size = CGSize(width: 0, height: 0)
     var reset = UIImageView(image: UIImage(named: "Reset"))
@@ -73,15 +79,19 @@ class GameProcessVC: UIViewController {
         view.layer.backgroundColor = UIColor(red: 0.136, green: 0.136, blue: 0.138, alpha: 1).cgColor
         parentVC = parent as? NewGameVC
         addHeaderAndTimer()
-        
-//        let right = container0.subviews[1]
-//        right.isUserInteractionEnabled = true
-//        let tap = UITapGestureRecognizer(target: self, action: #selector(scroll))
-//        right.addGestureRecognizer(tap)
-        
-        
+        currentTitle = pageSrack.arrangedSubviews[0] as! UILabel
+        currentTitle.textColor = .white
+        left = container0.subviews[2] as? UIImageView
+        left!.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(pushPrevious(_:)))
+        left!.addGestureRecognizer(tap)
+        right = container0.subviews[1] as? UIImageView
+        right!.isUserInteractionEnabled = true
+        let tapNext = UITapGestureRecognizer(target: self, action: #selector(pushNext(_:)))
+        right!.addGestureRecognizer(tapNext)
     }
     
+        
     func addHeaderAndTimer() {
         view.addSubview(newGame)
         view.addSubview(results)
@@ -128,6 +138,34 @@ class GameProcessVC: UIViewController {
         pageSrack.alignment = .center
         pageSrack.distribution = .equalCentering
         pageSrack.spacing = 5 * m
+    }
+    
+    @objc func pushPrevious(_ sender: UITapGestureRecognizer) {
+        let x = Int(cv.contentOffset.x) / Int(cv.frame.width)
+        let path = IndexPath(row: x, section: 0)
+        collectionView(cv, didSelectItemAt: path)
+    }
+    
+    @objc func pushNext(_ sender: UITapGestureRecognizer) {
+        var indexes = cv.indexPathsForVisibleItems
+        indexes.sort()
+        let index = indexes.last!
+        collectionView(cv, didSelectItemAt: index)
+    }
+    
+    func checkArrows(_ indexPath: IndexPath) {
+        if indexPath.row == 0 {
+            left?.image = UIImage(named: "Previous")
+            right?.image = UIImage(named: "Next")
+        }
+        else if indexPath.row == parentVC!.players.count - 1 {
+            left?.image = UIImage(named: "NextLeft")
+            right?.image = UIImage(named: "PreviousRight")
+        }
+        else {
+            left?.image = UIImage(named: "NextLeft")
+            right?.image = UIImage(named: "Next")
+        }
     }
 }
 
