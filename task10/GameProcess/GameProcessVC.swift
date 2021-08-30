@@ -10,11 +10,8 @@ import UIKit
 class GameProcessVC: UIViewController {
 
     weak var parentVC: NewGameVC?
-    var currentTitle = UILabel() {
-        didSet {
-            oldValue.textColor = timer.textColor
-        }
-    }
+    var currentTitle = UILabel()
+    var scrollDetermined = false
     var size = CGSize(width: 0, height: 0)
     var reset = UIImageView(image: UIImage(named: "Reset"))
     var newGame = UIButton("New Game")
@@ -31,6 +28,8 @@ class GameProcessVC: UIViewController {
         cv.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "GameHeader")
         cv.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "GameFooter")
         cv.showsHorizontalScrollIndicator = false
+        //cv.isPagingEnabled = true
+        //cv.decelerationRate = UIScrollView.DecelerationRate.fast
         return cv
     }()
     
@@ -74,6 +73,13 @@ class GameProcessVC: UIViewController {
         view.layer.backgroundColor = UIColor(red: 0.136, green: 0.136, blue: 0.138, alpha: 1).cgColor
         parentVC = parent as? NewGameVC
         addHeaderAndTimer()
+        
+//        let right = container0.subviews[1]
+//        right.isUserInteractionEnabled = true
+//        let tap = UITapGestureRecognizer(target: self, action: #selector(scroll))
+//        right.addGestureRecognizer(tap)
+        
+        
     }
     
     func addHeaderAndTimer() {
@@ -102,7 +108,7 @@ class GameProcessVC: UIViewController {
         addPageTitles()
         container1.addSubview(pageSrack)
         pageSrack.addConstrainsToPage(parentVC!.multiplier)
-        pageSrack.addSubview(reset)
+        container1.addSubview(reset)
         reset.addConstraintsToReset(multiplier: parentVC!.multiplier)
     }
     
@@ -158,3 +164,28 @@ class PlayButton: UIButton {
         }
     }
 }
+
+//class CustomLayout: UICollectionViewFlowLayout {
+//
+//    private var previousOffset: CGFloat = 0
+//    private var currentPage: Int = 0
+//
+//    override func targetContentOffset(forProposedContentOffset proposedContentOffset: CGPoint, withScrollingVelocity velocity: CGPoint) -> CGPoint {
+//        guard let collectionView = collectionView else {
+//            return super.targetContentOffset(forProposedContentOffset: proposedContentOffset, withScrollingVelocity: velocity)
+//        }
+//
+//        let itemsCount = collectionView.numberOfItems(inSection: 0)
+//
+//        if previousOffset > collectionView.contentOffset.x && velocity.x < 0 {
+//            currentPage = max(currentPage - 1, 0)
+//        } else if previousOffset < collectionView.contentOffset.x && velocity.x > 0 {
+//            currentPage = min(currentPage + 1, itemsCount - 1)
+//        }
+//
+//        let updatedOffset = (itemSize.width + minimumInteritemSpacing) * CGFloat(currentPage)
+//        previousOffset = updatedOffset
+//
+//        return CGPoint(x: updatedOffset, y: proposedContentOffset.y)
+//    }
+//}
