@@ -10,8 +10,8 @@ import UIKit
 class GameProcessVC: UIViewController {
 
     weak var parentVC: NewGameVC?
-    var left: UIImageView?
-    var right: UIImageView?
+    var left: Arrow?
+    var right: Arrow?
     var currentTitle = UILabel() {
         didSet {
             oldValue.textColor = timer.textColor
@@ -40,8 +40,8 @@ class GameProcessVC: UIViewController {
     var container0: UIView = {
         let m = UIScreen.main.bounds.width / 375
         let circle = UIButton(bigCircleName: "+1")
-        let right = UIImageView(image: UIImage(named: "Next"))
-        let left = UIImageView(image: UIImage(named: "Previous"))
+        let right = Arrow(image: UIImage(named: "Next"), name: "->")
+        let left = Arrow(image: UIImage(named: "Previous"), name: "|<-")
         let container = UIView()
         container.addSubview(circle)
         container.addSubview(right)
@@ -78,16 +78,15 @@ class GameProcessVC: UIViewController {
         addHeaderAndTimer()
         currentTitle = pageSrack.arrangedSubviews[0] as! UILabel
         currentTitle.textColor = .white
-        left = container0.subviews[2] as? UIImageView
+        left = container0.subviews[2] as? Arrow
+        right = container0.subviews[1] as? Arrow
         left!.isUserInteractionEnabled = true
-        let tap = UITapGestureRecognizer(target: self, action: #selector(pushPrevious(_:)))
-        left!.addGestureRecognizer(tap)
-        right = container0.subviews[1] as? UIImageView
         right!.isUserInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(pushPrevious(_:)))
         let tapNext = UITapGestureRecognizer(target: self, action: #selector(pushNext(_:)))
+        left!.addGestureRecognizer(tap)
         right!.addGestureRecognizer(tapNext)
         newGame.addTarget(self, action: #selector(tapOnNewGame), for: .touchUpInside)
-        //addPoints()
     }
     
     func addHeaderAndTimer() {
@@ -140,29 +139,41 @@ class GameProcessVC: UIViewController {
     
     @objc func pushPrevious(_ sender: UITapGestureRecognizer) {
         let x = Int(cv.contentOffset.x) / Int(cv.frame.width)
-        let path = IndexPath(row: x, section: 0)
+        var path = IndexPath(row: x, section: 0)
+        if left?.name == "|<-" && right?.name == "->" {
+            path = IndexPath(item: pageSrack.arrangedSubviews.count - 1, section: 0)
+        }
         collectionView(cv, didSelectItemAt: path)
     }
     
-    @objc func pushNext(_ sender: UITapGestureRecognizer) {
+    @objc func pushNext(_ sender: UIImageView) {
         var indexes = cv.indexPathsForVisibleItems
         indexes.sort()
-        let index = indexes.last!
-        collectionView(cv, didSelectItemAt: index)
+        var path = indexes.last!
+        if left?.name == "<-" && right?.name == "->|" {
+            path = IndexPath(item: 0, section: 0)
+        }
+        collectionView(cv, didSelectItemAt: path)
     }
     
     func checkArrows(_ indexPath: IndexPath) {
         if indexPath.row == 0 {
             left?.image = UIImage(named: "Previous")
+            left?.name = "|<-"
             right?.image = UIImage(named: "Next")
+            right?.name = "->"
         }
         else if indexPath.row == parentVC!.players.count - 1 {
             left?.image = UIImage(named: "NextLeft")
+            left?.name = "<-"
             right?.image = UIImage(named: "PreviousRight")
+            right?.name = "->|"
         }
         else {
             left?.image = UIImage(named: "NextLeft")
+            left?.name = "<-"
             right?.image = UIImage(named: "Next")
+            right?.name = "->"
         }
     }
     
@@ -234,5 +245,23 @@ class PlayButton: UIButton {
         else {
             self.isSelected = false
         }
+    }
+}
+
+class Arrow: UIImageView {
+    
+    var name: String?
+    
+    override init(image: UIImage?) {
+        super.init(image: image)
+    }
+    
+    convenience init(image: UIImage?, name: String) {
+        self.init(image: image)
+        self.name = name
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }

@@ -98,9 +98,5 @@ extension UIStackView {
         self.translatesAutoresizingMaskIntoConstraints = false
         self.topAnchor.constraint(equalTo: superview!.bottomAnchor, constant: 10 * multiplier).isActive = true
         self.centerXAnchor.constraint(equalTo: superview!.centerXAnchor).isActive = true
-        //self.widthAnchor.constraint(equalToConstant: 60 * multiplier).isActive = true
-        //self.setContentHuggingPriority(.fittingSizeLevel, for: .horizontal)
-        //self.heightAnchor.constraint(equalToConstant: 55 * multiplier).isActive = true
     }
 }
-
