@@ -137,7 +137,7 @@ class GameProcessVC: UIViewController {
         pageSrack.spacing = 5 * m
     }
     
-    @objc func pushPrevious(_ sender: UITapGestureRecognizer) {
+    @objc func pushPrevious(_ sender: Any) {
         let x = Int(cv.contentOffset.x) / Int(cv.frame.width)
         var path = IndexPath(row: x, section: 0)
         if left?.name == "|<-" && right?.name == "->" {
@@ -146,7 +146,7 @@ class GameProcessVC: UIViewController {
         collectionView(cv, didSelectItemAt: path)
     }
     
-    @objc func pushNext(_ sender: UIImageView) {
+    @objc func pushNext(_ sender: Any) {
         var indexes = cv.indexPathsForVisibleItems
         indexes.sort()
         var path = indexes.last!
@@ -209,8 +209,12 @@ class GameProcessVC: UIViewController {
         var sum = Int(cell.scoreLabel.text!)
         let newSum = Int(sender.titleLabel!.text!)
         sum! += newSum!
+        if sum! < 0 {
+            sum = 0
+        }
         let res = sum! as NSNumber
         cell.scoreLabel.text = res.stringValue
+        pushNext(sender)
     }
 }
 
