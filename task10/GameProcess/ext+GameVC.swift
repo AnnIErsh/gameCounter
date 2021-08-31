@@ -20,6 +20,8 @@ extension GameProcessVC: UICollectionViewDelegate, UICollectionViewDataSource, U
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = cv.dequeueReusableCell(withReuseIdentifier: "GameCell", for: indexPath) as! GameCell
         cell.backgroundColor = timer.textColor
+        cell.nameLabel.text = parentVC!.players[indexPath.row]
+        addPoints()
         return cell
     }
     
@@ -46,7 +48,7 @@ extension GameProcessVC: UICollectionViewDelegate, UICollectionViewDataSource, U
         currentTitle.textColor = .white
         checkArrows(index)
     }
-    
+        
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         cv.scrollToItem(at: indexPath, at: .centeredHorizontally, animated: true)
         currentTitle = pageSrack.arrangedSubviews[indexPath.row] as! UILabel

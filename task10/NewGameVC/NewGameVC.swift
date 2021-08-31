@@ -205,6 +205,11 @@ class NewGameVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         }
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        checkIfEmpty()
+    }
+    
     // MARK: action
     
     @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {

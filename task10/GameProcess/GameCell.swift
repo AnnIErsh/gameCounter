@@ -9,7 +9,6 @@ import UIKit
 
 class GameCell: UICollectionViewCell {
     
-    var nameAndScore: (String, CGFloat)?
     let multiplier = UIScreen.main.bounds.width / 375
     var nameLabel: UILabel = {
         let name = UILabel()
@@ -27,7 +26,7 @@ class GameCell: UICollectionViewCell {
         score.font = UIFont(name: "Nunito-ExtraBold", size: 100)
         var paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.lineHeightMultiple = 1.07
-        score.attributedText = NSMutableAttributedString(string: "15", attributes: [NSAttributedString.Key.paragraphStyle: paragraphStyle])
+        score.attributedText = NSMutableAttributedString(string: "0", attributes: [NSAttributedString.Key.paragraphStyle: paragraphStyle])
         return score
     }()
     

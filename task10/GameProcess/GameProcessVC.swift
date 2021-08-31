@@ -34,8 +34,6 @@ class GameProcessVC: UIViewController {
         cv.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: "GameHeader")
         cv.register(UICollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionFooter, withReuseIdentifier: "GameFooter")
         cv.showsHorizontalScrollIndicator = false
-        //cv.isPagingEnabled = true
-        //cv.decelerationRate = UIScrollView.DecelerationRate.fast
         return cv
     }()
     
@@ -73,7 +71,6 @@ class GameProcessVC: UIViewController {
     
     var pageSrack: UIStackView!
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.layer.backgroundColor = UIColor(red: 0.136, green: 0.136, blue: 0.138, alpha: 1).cgColor
@@ -89,9 +86,10 @@ class GameProcessVC: UIViewController {
         right!.isUserInteractionEnabled = true
         let tapNext = UITapGestureRecognizer(target: self, action: #selector(pushNext(_:)))
         right!.addGestureRecognizer(tapNext)
+        newGame.addTarget(self, action: #selector(tapOnNewGame), for: .touchUpInside)
+        //addPoints()
     }
     
-        
     func addHeaderAndTimer() {
         view.addSubview(newGame)
         view.addSubview(results)
@@ -166,6 +164,42 @@ class GameProcessVC: UIViewController {
             left?.image = UIImage(named: "NextLeft")
             right?.image = UIImage(named: "Next")
         }
+    }
+    
+    @objc func tapOnNewGame() {
+        self.removeChildVC(self)
+    }
+    
+    func addPoints() {
+        for i in container1.arrangedSubviews {
+            let j = i as! UIButton
+            j.isUserInteractionEnabled = true
+            j.addTarget(self, action: #selector(tapOnPoints(_:)), for: .touchUpInside)
+        }
+        
+        for i in container0.subviews {
+            if i .isKind(of: UIButton.self) {
+                let j = i as! UIButton
+                j.isUserInteractionEnabled = true
+                j.addTarget(self, action: #selector(tapOnPoints(_:)), for: .touchUpInside)
+            }
+        }
+    }
+    
+    @objc func tapOnPoints(_ sender: UIButton) {
+        var path = IndexPath()
+        for (n, i) in pageSrack.arrangedSubviews.enumerated() {
+            let j = i as! UILabel
+            if j.textColor == .white {
+                path = IndexPath(item: n, section: 0)
+            }
+        }
+        let cell = cv.cellForItem(at: path)! as! GameCell
+        var sum = Int(cell.scoreLabel.text!)
+        let newSum = Int(sender.titleLabel!.text!)
+        sum! += newSum!
+        let res = sum! as NSNumber
+        cell.scoreLabel.text = res.stringValue
     }
 }
 
