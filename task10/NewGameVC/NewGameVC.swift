@@ -9,7 +9,8 @@ import UIKit
 
 class NewGameVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
     
-    var cancel = UIButton("Cancel")
+    var gameVC = GameProcessVC()
+    var cancel: UIButton?
     var name = UILabel("Game Counter")
     var bigContent = UIView(frame: UIScreen.main.bounds)
     var startGame = UIButton(startButtonName: "Start game")
@@ -44,13 +45,25 @@ class NewGameVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
         addTableWithConstraints()
         addTitleName()
         if !UIApplication.isFirstLaunch() {
-            addCancelButton()
+            let del = UIApplication.shared.delegate as! AppDelegate
+            let vc = del.window?.rootViewController
+            if vc is GameProcessVC {
+                addCancelButton()
+            }
         }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        gameVC.parentVC = self
+        gameVC.modalPresentationStyle = .fullScreen
+        
+    }
+    
     func addCancelButton() {
-        view.addSubview(cancel)
-        cancel.addConstraintsToButton(&view, ratio)
+        cancel = UIButton("Cancel")
+        view.addSubview(cancel!)
+        cancel!.addConstraintsToButton(&view, ratio)
+        cancel!.addTarget(self, action: #selector(tapOnCancel(_:)), for: .touchUpInside)
     }
     
     func addTitleName() {
@@ -228,8 +241,11 @@ class NewGameVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     
     @objc func startGameTap(_ sender: UIButton) {
         print("start game")
-        let gameVC = GameProcessVC()
-        self.addChildVC(gameVC)
+        present(gameVC, animated: true, completion: nil)
+    }
+    
+    @objc func tapOnCancel(_ sender: UIButton) {
+        dismiss(animated: true, completion: nil)
     }
 }
 

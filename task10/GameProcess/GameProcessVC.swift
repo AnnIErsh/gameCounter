@@ -9,7 +9,7 @@ import UIKit
 
 class GameProcessVC: UIViewController {
 
-    weak var parentVC: NewGameVC?
+    var parentVC: NewGameVC?
     var left: Arrow?
     var right: Arrow?
     var currentTitle = UILabel() {
@@ -74,7 +74,6 @@ class GameProcessVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.layer.backgroundColor = UIColor(red: 0.136, green: 0.136, blue: 0.138, alpha: 1).cgColor
-        parentVC = parent as? NewGameVC
         addHeaderAndTimer()
         currentTitle = pageSrack.arrangedSubviews[0] as! UILabel
         currentTitle.textColor = .white
@@ -87,6 +86,10 @@ class GameProcessVC: UIViewController {
         left!.addGestureRecognizer(tap)
         right!.addGestureRecognizer(tapNext)
         newGame.addTarget(self, action: #selector(tapOnNewGame), for: .touchUpInside)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
     }
     
     func addHeaderAndTimer() {
@@ -178,7 +181,11 @@ class GameProcessVC: UIViewController {
     }
     
     @objc func tapOnNewGame() {
-        self.removeChildVC(self)
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.window?.rootViewController = self
+        let newVC = NewGameVC()
+        newVC.players = parentVC!.players
+        present(newVC, animated: true, completion: nil)
     }
     
     func addPoints() {

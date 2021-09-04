@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E718F90B26E3F80C0087BDE7 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = E718F90A26E3F80C0087BDE7 /* Protocols.swift */; };
 		E78A418E26DA485B0000CDA4 /* PlayersData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78A418D26DA485B0000CDA4 /* PlayersData.swift */; };
 		E78A419326DA66FD0000CDA4 /* AddPlayerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78A419226DA66FD0000CDA4 /* AddPlayerVC.swift */; };
 		E78A419626DB39670000CDA4 /* GameProcessVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E78A419526DB39670000CDA4 /* GameProcessVC.swift */; };
@@ -28,6 +29,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E718F90A26E3F80C0087BDE7 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		E78A418D26DA485B0000CDA4 /* PlayersData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayersData.swift; sourceTree = "<group>"; };
 		E78A419226DA66FD0000CDA4 /* AddPlayerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPlayerVC.swift; sourceTree = "<group>"; };
 		E78A419526DB39670000CDA4 /* GameProcessVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameProcessVC.swift; sourceTree = "<group>"; };
@@ -82,6 +84,7 @@
 		E7CC88F426D659750005532E = {
 			isa = PBXGroup;
 			children = (
+				E718F90A26E3F80C0087BDE7 /* Protocols.swift */,
 				E7CC88FF26D659750005532E /* task10 */,
 				E7CC88FE26D659750005532E /* Products */,
 			);
@@ -224,6 +227,7 @@
 				E78A419826DBF4FC0000CDA4 /* GameCell.swift in Sources */,
 				E78A41A326DC902B0000CDA4 /* ext+GameVC.swift in Sources */,
 				E78A419C26DC8EBE0000CDA4 /* ext+UILabel.swift in Sources */,
+				E718F90B26E3F80C0087BDE7 /* Protocols.swift in Sources */,
 				E7CC890126D659750005532E /* AppDelegate.swift in Sources */,
 				E78A419326DA66FD0000CDA4 /* AddPlayerVC.swift in Sources */,
 				E7CC891526D663D40005532E /* NewGameVC.swift in Sources */,
