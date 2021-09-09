@@ -51,9 +51,9 @@ extension UIView {
     
     func addConstraintsToReset(multiplier: CGFloat) {
         self.translatesAutoresizingMaskIntoConstraints = false
-        self.leadingAnchor.constraint(equalTo: superview!.leadingAnchor, constant: 20 * multiplier).isActive = true
+        self.leadingAnchor.constraint(equalTo: superview!.leadingAnchor, constant: 40 * multiplier).isActive = true
         self.heightAnchor.constraint(equalToConstant: 20 * multiplier).isActive = true
         self.widthAnchor.constraint(equalToConstant: 15 * multiplier).isActive = true
-        self.topAnchor.constraint(equalTo: superview!.bottomAnchor, constant: 10 * multiplier).isActive = true
+        self.bottomAnchor.constraint(equalTo: superview!.bottomAnchor, constant: -20 * multiplier).isActive = true
     }
 }

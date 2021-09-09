@@ -81,10 +81,13 @@ class GameProcessVC: UIViewController {
         right = container0.subviews[1] as? Arrow
         left!.isUserInteractionEnabled = true
         right!.isUserInteractionEnabled = true
+        reset.isUserInteractionEnabled = true
         let tap = UITapGestureRecognizer(target: self, action: #selector(pushPrevious(_:)))
         let tapNext = UITapGestureRecognizer(target: self, action: #selector(pushNext(_:)))
+        let tapReset = UITapGestureRecognizer(target: self, action: #selector(tapOnPoints(_:)))
         left!.addGestureRecognizer(tap)
         right!.addGestureRecognizer(tapNext)
+        reset.addGestureRecognizer(tapReset)
         newGame.addTarget(self, action: #selector(tapOnNewGame), for: .touchUpInside)
     }
     
@@ -118,7 +121,7 @@ class GameProcessVC: UIViewController {
         addPageTitles()
         container1.addSubview(pageSrack)
         pageSrack.addConstrainsToPage(parentVC!.multiplier)
-        container1.addSubview(reset)
+        view.addSubview(reset)
         reset.addConstraintsToReset(multiplier: parentVC!.multiplier)
     }
     
@@ -138,6 +141,10 @@ class GameProcessVC: UIViewController {
         pageSrack.alignment = .center
         pageSrack.distribution = .equalCentering
         pageSrack.spacing = 5 * m
+    }
+    
+    @objc func resetAllPoints(_ sender: Any) {
+        print("reset")
     }
     
     @objc func pushPrevious(_ sender: Any) {
@@ -204,7 +211,7 @@ class GameProcessVC: UIViewController {
         }
     }
     
-    @objc func tapOnPoints(_ sender: UIButton) {
+    @objc func tapOnPoints(_ sender: Any) {
         var path = IndexPath()
         for (n, i) in pageSrack.arrangedSubviews.enumerated() {
             let j = i as! UILabel
@@ -214,14 +221,21 @@ class GameProcessVC: UIViewController {
         }
         let cell = cv.cellForItem(at: path)! as! GameCell
         var sum = Int(cell.scoreLabel.text!)
-        let newSum = Int(sender.titleLabel!.text!)
-        sum! += newSum!
-        if sum! < 0 {
-            sum = 0
+        if sender is UIButton {
+            let tmp = sender as! UIButton
+            let newSum = Int(tmp.titleLabel!.text!)
+            sum! += newSum!
+            if sum! < 0 {
+                sum = 0
+            }
+            let res = sum! as NSNumber
+            cell.scoreLabel.text = res.stringValue
+            pushNext(sender)
+            
         }
-        let res = sum! as NSNumber
-        cell.scoreLabel.text = res.stringValue
-        pushNext(sender)
+        else if sender is UITapGestureRecognizer {
+            cell.scoreLabel.text = "0"
+        }
     }
 }
 
