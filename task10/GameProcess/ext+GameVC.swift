@@ -21,6 +21,16 @@ extension GameProcessVC: UICollectionViewDelegate, UICollectionViewDataSource, U
         let cell = cv.dequeueReusableCell(withReuseIdentifier: "GameCell", for: indexPath) as! GameCell
         cell.backgroundColor = timer.textColor
         cell.nameLabel.text = parentVC!.players[indexPath.row]
+        if isReseted && indexPath.row == parentVC!.players.count - 1 {
+            let tmp = Int(cell.scoreLabel.text!)
+            var res = tmp! - addSum
+            print("res: ", res)
+            if res < 0 {
+                res = 0
+            }
+            cell.scoreLabel.text = "\(res)"
+            isReseted = false
+        }
         addPoints()
         return cell
     }
@@ -54,7 +64,20 @@ extension GameProcessVC: UICollectionViewDelegate, UICollectionViewDataSource, U
         currentTitle = pageSrack.arrangedSubviews[indexPath.row] as! UILabel
         currentTitle.textColor = .white
         checkArrows(indexPath)
+        let p = indexPath.row
+        if isReseted && p != pageSrack.arrangedSubviews.count - 1 {
+            let cell = collectionView.cellForItem(at: indexPath) as? GameCell
+            if cell == nil {
+                return 
+            }
+            let tmp = Int(cell!.scoreLabel.text!)
+            var res = tmp! - addSum
+            print("res: ", res)
+            if res < 0 {
+                res = 0
+            }
+            cell!.scoreLabel.text = "\(res)"
+            isReseted = false
+        }
     }
 }
-
-

@@ -26,6 +26,9 @@ class GameProcessVC: UIViewController {
     var timer = UILabel(timerName: "15:00")
     var dice = UIImageView(image: UIImage(named: "Dice_4"))
     var play = PlayButton()
+    var isReseted = false
+    var currSum = 0
+    var addSum  = 0
     var cv: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -143,9 +146,9 @@ class GameProcessVC: UIViewController {
         pageSrack.spacing = 5 * m
     }
     
-    @objc func resetAllPoints(_ sender: Any) {
-        print("reset")
-    }
+//    @objc func resetAllPoints(_ sender: Any) {
+//        print("reset")
+//    }
     
     @objc func pushPrevious(_ sender: Any) {
         let x = Int(cv.contentOffset.x) / Int(cv.frame.width)
@@ -212,6 +215,7 @@ class GameProcessVC: UIViewController {
     }
     
     @objc func tapOnPoints(_ sender: Any) {
+        isReseted = false
         var path = IndexPath()
         for (n, i) in pageSrack.arrangedSubviews.enumerated() {
             let j = i as! UILabel
@@ -228,13 +232,15 @@ class GameProcessVC: UIViewController {
             if sum! < 0 {
                 sum = 0
             }
+            currSum = sum!
+            addSum = newSum!
             let res = sum! as NSNumber
             cell.scoreLabel.text = res.stringValue
             pushNext(sender)
-            
         }
         else if sender is UITapGestureRecognizer {
-            cell.scoreLabel.text = "0"
+            isReseted = true
+            pushPrevious(sender)
         }
     }
 }
