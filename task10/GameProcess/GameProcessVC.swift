@@ -146,10 +146,6 @@ class GameProcessVC: UIViewController {
         pageSrack.spacing = 5 * m
     }
     
-//    @objc func resetAllPoints(_ sender: Any) {
-//        print("reset")
-//    }
-    
     @objc func pushPrevious(_ sender: Any) {
         let x = Int(cv.contentOffset.x) / Int(cv.frame.width)
         var path = IndexPath(row: x, section: 0)
@@ -223,8 +219,11 @@ class GameProcessVC: UIViewController {
                 path = IndexPath(item: n, section: 0)
             }
         }
-        let cell = cv.cellForItem(at: path)! as! GameCell
-        var sum = Int(cell.scoreLabel.text!)
+        let cell = cv.cellForItem(at: path) as? GameCell
+        if cell == nil {
+            return
+        }
+        var sum = Int(cell!.scoreLabel.text!)
         if sender is UIButton {
             let tmp = sender as! UIButton
             let newSum = Int(tmp.titleLabel!.text!)
@@ -235,7 +234,7 @@ class GameProcessVC: UIViewController {
             currSum = sum!
             addSum = newSum!
             let res = sum! as NSNumber
-            cell.scoreLabel.text = res.stringValue
+            cell!.scoreLabel.text = res.stringValue
             pushNext(sender)
         }
         else if sender is UITapGestureRecognizer {
