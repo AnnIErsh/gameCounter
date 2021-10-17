@@ -9,6 +9,7 @@ import UIKit
 
 class NewGameVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
     
+    var isFirst = true
     var gameVC = GameProcessVC()
     var cancel: UIButton?
     var name = UILabel("Game Counter")
@@ -56,7 +57,13 @@ class NewGameVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     override func viewWillAppear(_ animated: Bool) {
         gameVC.parentVC = self
         gameVC.modalPresentationStyle = .fullScreen
-        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        if !isFirst {
+            present(gameVC, animated: false, completion: nil)
+        }
     }
     
     func addCancelButton() {

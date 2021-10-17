@@ -20,10 +20,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        let newGameVC = NewGameVC()
         window = UIWindow.init(frame: UIScreen.main.bounds)
+        let defaults = UserDefaults.standard
+        if defaults.object(forKey: "FirstTime") == nil {
+            defaults.set("No", forKey:"FirstTime")
+            window!.rootViewController = NewGameVC()
+        } else {
+            let newVC = NewGameVC()
+            newVC.isFirst = false
+            window!.rootViewController = newVC
+        }
         window?.makeKeyAndVisible()
-        window?.rootViewController = newGameVC
         print("did finish launching")
         return true
     }
