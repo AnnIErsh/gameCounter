@@ -7,7 +7,7 @@
 
 import UIKit
 
-class NewGameVC: UIViewController, UITableViewDelegate, UITableViewDataSource, UIScrollViewDelegate {
+class NewGameVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var isFirst = true
     var gameVC = GameProcessVC()
@@ -62,7 +62,9 @@ class NewGameVC: UIViewController, UITableViewDelegate, UITableViewDataSource, U
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if !isFirst {
-            present(gameVC, animated: false, completion: nil)
+            dismiss(animated: true)
+            present(gameVC, animated: true, completion: nil)
+            isFirst = true
         }
     }
     

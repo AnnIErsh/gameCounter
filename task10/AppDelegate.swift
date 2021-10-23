@@ -55,14 +55,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         print("terminate")
     }
     
-    func application(_ application: UIApplication, shouldSaveSecureApplicationState coder: NSCoder) -> Bool {
-        print("save")
-        return true
-    }
-    
-    func application(_ application: UIApplication, shouldRestoreSecureApplicationState coder: NSCoder) -> Bool {
-        print("restore")
-        return true
-    }
+//    func application(_ application: UIApplication, shouldSaveSecureApplicationState coder: NSCoder) -> Bool {
+//        print("save")
+//        return true
+//    }
+//    
+//    func application(_ application: UIApplication, shouldRestoreSecureApplicationState coder: NSCoder) -> Bool {
+//        print("restore")
+//        return true
+//    }
 }
 
